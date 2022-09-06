@@ -50,7 +50,7 @@ import logo from './Cargil-logo.jpg'
       {/* <img src={logo} alt="Logo" /> */}
         {/* <Globalfilter filter = {globalFilter} setFilter = {setGlobalFilter} /> */}
 
-      <table {...getTableProps()} style = {{marginTop:'50px'}}>
+      <table {...getTableProps()} style = {{marginTop:'50px',}}>
        <thead>
          {headerGroups.map(headerGroup => (
            <tr {...headerGroup.getHeaderGroupProps()}>
