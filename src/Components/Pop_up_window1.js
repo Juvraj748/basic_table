@@ -45,7 +45,8 @@ export default function Pop_up_window1({Ref_Number}) {
   const [Adden_Add, SetAdden_Add] = useState(true);
   const [SD_Add, SetSD_Add] = useState(true);
 
-console.log(Ref_Number)
+
+// console.log(Ref_Number)
 
   return (
     <div>

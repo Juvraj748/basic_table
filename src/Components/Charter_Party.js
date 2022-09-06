@@ -25,6 +25,7 @@ const Charter_Party = (Ref_Number) => {
         borderColor : '#000000' 
       }));
 
+      
       const Item2 = styled(Paper)(({ theme }) => ({
         // backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         // background : '#D9D9D9',
