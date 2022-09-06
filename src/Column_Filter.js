@@ -6,7 +6,12 @@ export const Column_Filter = ({column}) => {
     return (
     <span>
         <input 
-        max-width = "14px"
+        style={{
+          // minWidth : '92%',
+          margin : "4px",
+          padding : '4px',
+          fontWeight : 'normal'
+        }}
         placeHolder= "Search..." 
         value = {filterValue || ''} 
         onChange = { e => {

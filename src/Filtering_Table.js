@@ -8,7 +8,7 @@ import Globalfilter from './Globalfilter'
  function Filtering_Table() {
    const data = useMemo(() => Cargil_Mock_Data,[])
  
-   const columns = useMemo(() => Columns,[])
+   const columns = useMemo(() => Columns,[])  
  
    const {
      getTableProps,
@@ -42,7 +42,7 @@ import Globalfilter from './Globalfilter'
                <th 
                  {...column.getHeaderProps()}
                  style={{
-                   borderBottom: 'solid 2px black',
+                  //  borderBottom: 'solid 2px black',
                    background: 'aliceblue',
                    color: 'black',
                    padding : '5px',
@@ -74,7 +74,8 @@ import Globalfilter from './Globalfilter'
                       textAlign : 'center',
                        padding: '5px',
                       //  justifyItems : 'center',
-                      //  border: 'solid 1px gray',
+                       border: 'solid 1px gray',
+                       marginBottom: 2
                       //  background: 'papayawhip',
                      }}
                    >

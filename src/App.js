@@ -5,6 +5,7 @@ import Filtering_Table from './Filtering_Table'
 import Sorting_Table from './Sorting_Table'
 import Sort_GlobalFilter_Table from './Sort_GlobalFilter_Table'
 // import './table.css'
+import Pop_up_window from './Components/Pop_up_window1'
  
  function App() {
    return (
