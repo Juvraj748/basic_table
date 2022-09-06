@@ -1,10 +1,11 @@
-import Cargil_Mock_Data from './MOCK_DATA (1).json'
+import Cargil_Mock_Data from './Tc-In_TC-Out_IMOS.json'
 import Columns from './Columns'
-import { useTable, useGlobalFilter, useFilters } from 'react-table'
+import { useTable, useGlobalFilter, useFilters, useSortBy, usePagination } from 'react-table'
 import React, {useMemo} from 'react'
 import Globalfilter from './Globalfilter'
 import Column_Filter from './Column_Filter'
 // import './table.css'
+import logo from './Cargil-logo.jpg'
  
  function Column_Filter_Table() {
    const data = useMemo(() => Cargil_Mock_Data,[])
@@ -19,7 +20,21 @@ import Column_Filter from './Column_Filter'
      state,
      setGlobalFilter,
      prepareRow,
-   } = useTable({  data,columns }, useFilters, useGlobalFilter )
+     page, 
+     // Instead of using 'rows', we'll use page,
+    // which has only the rows for the active page
+
+    // The rest of these things are super handy, too ;)
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize },
+   } = useTable({  data,columns,initialState: { pageIndex: 0 } }, useFilters, useGlobalFilter, useSortBy, usePagination )
  
    const { globalFilter } = state
 
@@ -31,8 +46,24 @@ import Column_Filter from './Column_Filter'
       alignItems : 'center',
       justifyContent : 'center'
      }}>
+      <img src={logo} alt="Logo" />
         <Globalfilter filter = {globalFilter} setFilter = {setGlobalFilter} />
 
+        {/* <pre>
+        <code>
+          {JSON.stringify(
+            {
+              pageIndex,
+              pageSize,
+              pageCount,
+              canNextPage,
+              canPreviousPage,
+            },
+            null,
+            2
+          )}
+        </code>
+      </pre> */}
       <table {...getTableProps()} 
       // style={{ border: 'solid 1px green' }}
       >
@@ -43,7 +74,9 @@ import Column_Filter from './Column_Filter'
                <th {...column.getHeaderProps()}
                  style={{
                    borderBottom: 'solid 2px black',
-                   background: '#638C1C',
+                   background: '#638C0C',
+                  //  border : 'black',
+                  // background: '#195919',
                    color: 'white',
                    padding : '5px',
                    fontWeight: 'normal',
@@ -59,7 +92,7 @@ import Column_Filter from './Column_Filter'
          ))}
        </thead>
        <tbody {...getTableBodyProps()}>
-         {rows.map(row => {
+         {page.map(row => {
            prepareRow(row)
            return (
              <tr {...row.getRowProps()}>
@@ -87,6 +120,51 @@ import Column_Filter from './Column_Filter'
          })}
        </tbody>
      </table>
+
+     <div className="pagination" style = {{margin : '30px'}}>
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {'<<'}
+        </button>{' '}
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {'<'}
+        </button>{' '}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {'>'}
+        </button>{' '}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {'>>'}
+        </button>{' '}
+        <span>
+          Page{' '}
+          <strong>
+            {pageIndex + 1} of {pageOptions.length}
+          </strong>{' '}
+        </span>
+        <span>
+          | Go to page:{' '}
+          <input
+            type="number"
+            defaultValue={pageIndex + 1}
+            onChange={e => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0
+              gotoPage(page)
+            }}
+            style={{ width: '100px' }}
+          />
+        </span>{' '}
+        <select
+          value={pageSize}
+          onChange={e => {
+            setPageSize(Number(e.target.value))
+          }}
+        >
+          {[10, 20, 30, 40, 50].map(pageSize => (
+            <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </select>
+      </div>
      </div>
    )
  }
